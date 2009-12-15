@@ -1,0 +1,24 @@
+This is just a template example of how to use GLUT and Juggler
+together. All the example does right now is just fade in some
+lights to a blue clear color, nothing fancy.
+
+You need to have a few dependencies built on both sides to run
+this template. On OS X, you will have to have OSG built and
+installed in /Library/Frameworks. You will also have to have
+gmtl built and installed in /opt/local/include/gmtl-0.5.4.
+
+As for the Linux Juggler side, you will have to set a few
+environment variables in your .cshrc file including:
+
+setenv OSG_HOME /home/users/cnoon15/Libraries/OpenSceneGraph-2.8.2
+setenv VJ_BASE_DIR /home/users/cnoon15/Libraries/vrjuggler-2.3.16
+setenv FLAGPOLL_PATH /home/users/cnoon15/Libraries/vrjuggler-2.3.16/lib64/flagpoll
+setenv LD_LIBRARY_PATH ${VJ_BASE_DIR}/lib64:${OSG_HOME}/lib64
+
+If you have any problems or questions ask Christian, Brandon, or
+Ken as they use this method of development for most all Juggler
+applications.
+
+Thanks,
+
+- Christian
