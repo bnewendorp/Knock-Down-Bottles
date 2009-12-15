@@ -1,0 +1,741 @@
+/*
+ *  String.h
+ *  String
+ *
+ *  Created by Christian Noon on 8/12/09.
+ *  Copyright 2009 Amoniq LLC. All rights reserved.
+ *
+ *  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements.  See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *  
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *  
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
+
+#ifndef _AQ_STRING_H_
+#define _AQ_STRING_H_
+
+#include <iostream>
+#include <sstream>
+#include <vector>
+#include <assert.h>
+
+#ifdef _WIN32
+	#include <direct.h>
+#endif
+
+namespace aq {
+
+/**
+ * A string class which adds lots of useful string methods ontop of
+ * the std::string class. These methods range from custom print methods
+ * for many different types of objects as well as string methods common
+ * in both Python and Objective-C. This class was developed to eliminate
+ * the pain of string parsing by implementing a much more straight forward
+ * syntax to make development much easier and less time consuming.
+ */
+class String : public std::string
+{
+public:
+
+	/**
+	 * Case Sensitivity enumeration.
+	 *
+	 * This enumeration is used in many methods to specify whether or not
+	 * you would like to use a case sensitive search.
+	 */
+	enum CaseSensitivity 
+	{
+		CaseSensitive = 0,
+		NotCaseSensitive = 1
+	};
+
+
+#ifdef __APPLE__
+	#pragma mark Constructors
+#endif
+
+	/**
+	 * Default constructor.
+	 */
+	String();
+	
+	/**
+	 * Constructor that takes a const char*.
+	 */
+	String(const char* c_string);
+	
+	/**
+	 * Constructor that takes a std::string.
+	 */
+	String(std::string std_string);
+	
+	/**
+	 * Constructor that takes a float.
+	 */
+	String(float number);
+	
+	/**
+	 * Constructor that takes an int.
+	 */
+	String(int number);
+	
+	/**
+	 * Constructor that takes a double.
+	 */
+	String(double number);
+	
+	/**
+	 * Constructor that takes a bool.
+	 */
+	String(bool bool_value);
+	
+#ifdef __APPLE__
+	#pragma mark Static Methods
+#endif
+	
+	/**
+	 * Returns the current working directory.
+	 */
+	static String getCurrentWorkingDirectory();
+
+	/**
+	 * Returns the environment variable path.
+	 *
+	 * @param env_var - the environment variable you wish to find the path for. 
+	 */
+	static String getEnvironmentVariable(String env_var);
+
+	/**
+	 * Returns a string joined between path and fname with a forward or back slash
+	 * depending on the operating system.
+	 *
+	 * @param path - the file path.
+	 * @param fname - the file name.
+	 */
+	static String join(String path, String fname);
+
+	/**
+	 * Returns a string joined by a forward or backslash between all the elements
+	 * of the string vector.
+	 *
+	 * @param strings - the strings to join together.
+	 */
+	static String joinVector(std::vector<String> strings);
+	
+	/**
+	 * Prints the given String.
+	 *
+	 * @param print_string - the String to print.
+	 */
+	static void print(String print_string);
+
+	/**
+	 * Prints the given std::string.
+	 *
+	 * @param print_string - the std::string to print.
+	 */
+	static void print(std::string print_string);
+
+	/**
+	 * Prints the given const char*.
+	 *
+	 * @param print_string - the const char* to print.
+	 */
+	static void print(const char* print_string);
+	
+	/**
+	 * Prints the given float.
+	 *
+	 * @param print_string - the float to print.
+	 */
+	static void print(float print_string);
+	
+	/**
+	 * Prints the given int.
+	 *
+	 * @param print_string - the int to print.
+	 */
+	static void print(int print_string);
+	
+	/**
+	 * Prints the given std::string.
+	 *
+	 * @param print_string - the double to print.
+	 */
+	static void print(double print_string);
+	
+	/**
+	 * Prints the given bool.
+	 *
+	 * @param print_string - the bool to print.
+	 */
+	static void print(bool print_string);
+
+
+#ifdef __APPLE__
+	#pragma mark Helper Methods
+#endif
+	
+	/**
+	 * Appends the string append_string onto the end of this string.
+	 *
+	 * @param append_string - the String to add.
+	 */
+	void append(const String append_string);
+
+	/**
+	 * Appends the const char* append_char onto the end of this string.
+	 *
+	 * @param append_string - the String to add.
+	 */
+	void append(const char* append_char);
+	
+	/**
+	 * Returns the character at the given index position in this string.
+	 *
+	 * @param position - the position of the character to return of this string.
+	 */
+	char& at(int position);
+	
+	/**
+	 * Returns a c string.
+	 */	
+	const char* c_str();
+	
+	/**
+	 * Capitalizes the first letter of this string.
+	 */		
+	void capitalize();
+	
+	/**
+	 * Clears the contents of the string and makes it empty.
+	 */
+	void clear();
+	
+	// Compares the content of this object (or a substring of it, known as compared (sub)string) 
+	//   to the content of a comparing string, which is formed according to the arguments passed.
+	
+	/**
+	 * Compares the content of this string with the String str.
+	 *
+	 * Returns whether or not the content within both objects is the same.
+	 *
+	 * @param str - the string to compare content against with this string.
+	 */
+	bool compare(const String str) const;
+	
+	/**
+	 * Compares the content of this string with the const char* char_star.
+	 *
+	 * Returns whether or not the content within both objects is the same.
+	 *
+	 * @param char_star - the const char* to compare content against with this string.
+	 */
+	bool compare(const char* char_star) const;
+	
+	/**
+	 * Returns true if this string contains an occurrence of the string str, 
+	 * otherwise returns false.
+	 *
+	 * @param contain_string - the String to see if is contained within this string.
+	 * @param cs - the case sensitivity to be used, defaults to String::CaseSensitive.
+	 */
+	bool contains(String contain_string, String::CaseSensitivity cs = String::CaseSensitive);
+
+	/**
+	 * Returns true if this string contains an occurrence of the const char* contain_char, 
+	 * otherwise returns false.
+	 *
+	 * @param contain_char - the const char* to see if is contained within this string.
+	 * @param cs - the case sensitivity to be used, defaults to String::CaseSensitive.
+	 */
+	bool contains(const char* contain_char, String::CaseSensitivity cs = String::CaseSensitive);
+
+	/**
+	 * Returns the number of (potentially overlapping) occurrences of the String 
+	 * contain_string in this string.
+	 *
+	 * @param contain_string - the String to see if is contained within this string.
+	 * @param cs - the case sensitivity to be used, defaults to String::CaseSensitive.
+	 */
+	int count(const String contain_string, String::CaseSensitivity cs = String::CaseSensitive);
+
+	/**
+	 * Returns the number of (potentially overlapping) occurrences of the const char* 
+	 * contain_char in this string.
+	 *
+	 * @param contain_char - the const char* to see if is contained within this string.
+	 * @param cs - the case sensitivity to be used, defaults to String::CaseSensitive.
+	 */
+	int count(const char* contain_char, String::CaseSensitivity cs = String::CaseSensitive);
+	
+	/**
+	 * Returns true if the string has no characters; otherwise returns false.
+	 *
+	 * Same as isEmpty() method.
+	 */
+	bool empty();
+	
+	/**
+	 * Returns true if this string ends with end_string; otherwise returns false.
+	 *
+	 * @param end_string - the string to check if this string ends with.
+	 * @param cs - the case sensitivity to be used, defaults to String::CaseSensitive.
+	 */
+	bool endsWith(String end_string, String::CaseSensitivity cs = String::CaseSensitive);
+
+	/**
+	 * Returns true if this string ends with end_char; otherwise returns false.
+	 *
+	 * @param end_char - the const char* to check if this string ends with.
+	 * @param cs - the case sensitivity to be used, defaults to String::CaseSensitive.
+	 */
+	bool endsWith(const char* end_char, String::CaseSensitivity cs = String::CaseSensitive);
+
+	/**
+	 * Erases a part of the string content, shortening the length of this string.
+	 *
+	 * @param position - the index of this string to start erasing at.
+	 * @param width - the number of characters to erase from this string.
+	 */	
+	void erase(int position, int width);
+
+	/**
+	 * Erases a part of the string content, shortening the length of this string.
+	 *
+	 * @param position - an iterator at the character index to remove from this string.
+	 */	
+	void erase(iterator position);
+
+	/**
+	 * Erases a part of the string content, shortening the length of the string.
+	 *
+	 * @param first - an iterator at the character index to start removing from this string.
+	 * @param last - an iterator at the character index to stop removing from this string.
+	 */	
+	void erase(iterator first, iterator last);
+
+	/**
+	 * Sets every character in the string to character ch. If size is different from -1 (default), 
+	 * the string is resized to size beforehand.
+	 *
+	 * @param ch - the character to fill this string with.
+	 * @param size - the size to resize this string to be filling.
+	 */		
+	void fill(const char* ch, int size=-1);
+	
+	/**
+	 * Searches the string for the content specified in string str and returns the 
+	 * position of the first occurrence in the string.
+	 *
+	 * @param str - the String to find the first occurence of in this string.
+	 * @param position - the index of the string to start searching at.
+	 */
+	int find(const String str, int position = 0);
+
+	/**
+	 * Searches the string for the content specified in the const char* and returns the 
+	 * position of the first occurrence in the string.
+	 *
+	 * @param char_star - the const char* to find the first occurence of in this string.
+	 * @param position - the index of the string to start searching at.
+	 */
+	int find(const char* char_star, int position = 0);
+
+	/**
+	 * Returns the index position of the first occurrence of the String index_string 
+	 * in this string, searching forward from index position from. Returns -1 if 
+	 * index_string is not found.
+	 *
+	 * @param index_string - the String to find the first occurence of in this string.
+	 * @param from - the index of the string to start searching at.
+	 * @param cs - the case sensitivity to be used, defaults to String::CaseSensitive.
+	 */
+	int indexOf(String index_string, int from = 0, 
+				String::CaseSensitivity cs = String::CaseSensitive);
+
+	/**
+	 * Returns the index position of the first occurrence of the const char* index_char 
+	 * in this string, searching forward from index position from. Returns -1 if 
+	 * index_char is not found.
+	 *
+	 * @param index_char - the const char* to find the first occurence of in this string.
+	 * @param from - the index of the string to start searching at.
+	 * @param cs - the case sensitivity to be used, defaults to String::CaseSensitive.
+	 */
+	int indexOf(const char* index_char, int from = 0, 
+				String::CaseSensitivity cs = String::CaseSensitive);
+	
+	/**
+	 * Inserts the String insert_string at the given index position.
+	 *
+	 * @param position - the index position of the string to start inserting at.
+	 * @param insert_string - the String to insert at the given index position in this string.
+	 */
+	void insert(int position, String insert_string);
+
+	/**
+	 * Inserts the const char* insert_char at the given index position.
+	 *
+	 * @param position - the index position of the string to start inserting at.
+	 * @param insert_char - the const char* to insert at the given index position in this string.
+	 */
+	void insert(int position, const char* insert_char);
+
+	/**
+	 * Returns true if the string has no characters; otherwise returns false.
+	 *
+	 * Same as empty() method.
+	 */
+	bool isEmpty();
+	
+	/**
+	 * Returns the index position of the last occurrence of the String index_string 
+	 * in this string, searching backward from index position from. If from is -1 (default), 
+	 * the search starts at the last character.
+	 *
+	 * @param index_string - the String to find the first occurence of in this string.
+	 * @param from - the index position of the string to start searching at.
+	 * @param cs - the case sensitivity to be used, defaults to String::CaseSensitive.	 
+	 */	
+	int lastIndexOf(String index_string, int from = -1, 
+					String::CaseSensitivity cs=String::CaseSensitive);
+
+	/**
+	 * Returns the index position of the last occurrence of the const char* index_char 
+	 * in this string, searching backward from index position from. If from is -1 (default), 
+	 * the search starts at the last character.
+	 *
+	 * @param index_char - the const char* to find the first occurence of in this string.
+	 * @param from - the index position of the string to start searching at.
+	 * @param cs - the case sensitivity to be used, defaults to String::CaseSensitive.	 
+	 */	
+	int lastIndexOf(const char* index_char, int from = -1, 
+					String::CaseSensitivity cs=String::CaseSensitive);
+					
+	/**
+	 * Returns a substring that contains the num leftmost characters of the string.
+	 *
+	 * @param num - the number of characters to return.
+	 */		
+	String left(int num);
+	
+	/**
+	 * Returns the number of characters in this string. Equivalent to size().
+	 */		
+	int length();
+	
+	/**
+	 * Prepends the String prepend_string to the beginning of this string.
+	 *
+	 * @param prepend_string - the String to prepend to the beginning of this string.
+	 */	
+	void prepend(const String prepend_string);
+
+	/**
+	 * Prepends the const char* prepend_string to the beginning of this string.
+	 *
+	 * @param prepend_char - the const char* to prepend to the beginning of this string.
+	 */	
+	void prepend(const char* prepend_char);
+	
+	/**
+	 * Prints this string.
+	 */	
+	void print();
+	
+	/**
+	 * Removes n characters from the string, starting at the given position index..
+	 *
+	 * @param position - the index position to start removing characters at from this string.
+	 * @param width - the number of characters to remove from this string.
+	 */	
+	void remove(int position, int width);
+
+	/**
+	 * Removes every occurrence of the given String remove_string in this string.
+	 *
+	 * @param remove_string - the String to remove from this string.
+	 * @param cs - the case sensitivity to be used, defaults to String::CaseSensitive.
+	 */	
+	void remove(String remove_string, String::CaseSensitivity cs=String::CaseSensitive);
+
+	/**
+	 * Removes every occurrence of the given const char* remove_char in this string.
+	 *
+	 * @param remove_char - the const char* to remove from this string.
+	 * @param cs - the case sensitivity to be used, defaults to String::CaseSensitive.
+	 */	
+	void remove(const char* remove_char, String::CaseSensitivity cs=String::CaseSensitive);
+	
+	// Replaces n characters beginning at index position with the string after and returns a 
+	//   reference to this string.
+	// Replaces n characters beginning at index position with the first size characters of the 
+	//   QChar array unicode and returns a reference to this string.
+	
+	/**
+	 * Replaces width characters beginning at the index position in this string with
+	 * the String replace_string.
+	 *
+	 * @param position - the index of this string to start replacing at.
+	 * @param width - the number of characters to replace in this string.
+	 * @param replace_string - the String to replace the width characters in this string.
+	 */	
+	void replace(int position, int width, const String replace_string);
+
+	/**
+	 * Replaces width characters beginning at the index position in this string with
+	 * the const char* replace_char.
+	 *
+	 * @param position - the index of this string to start replacing at.
+	 * @param width - the number of characters to replace in this string.
+	 * @param replace_char - the const char* to replace the width characters in this string.
+	 */	
+	void replace(int position, int width, const char* replace_char);
+	
+	/**
+	 * Replaces every occurrence of the String before_string with the String after_string.
+	 *
+	 * @param before_string - the String to be replaced in this string.
+	 * @param after_string - the String to replace the before_string in this string.
+	 * @param cs - the case sensitivity to be used, defaults to String::CaseSensitive.
+	 */		
+	void replace(String before_string, String after_string, 
+				 String::CaseSensitivity cs=String::CaseSensitive);
+
+	/**
+	 * Replaces every occurrence of the const char* before_char with the const char* after_char.
+	 *
+	 * @param before_char - the const char* to be replaced in this string.
+	 * @param after_char - the const char* to replace the before_string in this string.
+	 * @param cs - the case sensitivity to be used, defaults to String::CaseSensitive.
+	 */
+	void replace(const char* before_char, const char* after_char, 
+				 String::CaseSensitivity cs=String::CaseSensitive);
+	
+	/**
+	 * Resizes this string content to n characters.
+	 *
+	 * If n is smaller than the current length of the string, the content is reduced to its first 
+	 * n characters, the rest being dropped.
+	 *
+	 * @param n - the number of characters to resize this string to.
+	 */	
+	void resize(int n);				  
+
+	/**
+	 * Resizes this string content to n characters.
+	 *
+	 * If n is smaller than the current length of the string, the content is reduced to its first 
+	 * n characters, the rest being dropped.
+	 *
+	 * If n is greater than the current length of the string, the content is expanded by appending 
+	 * as many instances of the const char* c as needed to reach a size of n characters.
+	 *
+	 * @param n - the number of characters to resize this string to.
+	 */	
+	void resize(int n, const char* c);
+	
+	// Searches the string for the content specified in either str, s or c, and returns the 
+	//   position of the last occurrence in the string.
+	
+	/**
+	 * Searches this string for the content specified in String str and returns the 
+	 * position of the last occurrence in the string.
+	 *
+	 * @param str - the String to find in this string.
+	 */	
+	int rfind(const String str);
+
+	/**
+	 * Searches this string for the content specified in const char* char_star and returns the 
+	 * position of the last occurrence in the string.
+	 *
+	 * @param char_star - the const char* to find in this string.
+	 */	
+	int rfind(const char* char_star);
+					  
+	/**
+	 * Returns a substring that contains the num rightmost characters of the string.
+	 *
+	 * @param num - the number of characters to return.
+	 */
+	String right(int num);
+	
+	/**
+	 * Returns a section of the string between start and end positions.
+	 *
+	 * @param start - the index position to start the section at in this string.
+	 * @param end - the index position to end the section at in this string.
+	 */
+	String section(int start, int end  = -1);
+	
+	/**
+	 * Returns the number of characters in this string.
+	 */
+	int size();
+	
+	/**
+	 * Returns a vector of strings that were separated by the given character.
+	 *
+	 * @param sep - the const char* used to separate all the Strings in this string.
+	 */
+	std::vector<String> split(const char* sep);
+	
+	/**
+	 * Returns true if this string starts with start_string; otherwise returns false.
+	 *
+	 * @param start_string - the String used to see if this string starts with 
+	 * the same characters.
+	 * @param cs - the case sensitivity to be used, defaults to String::CaseSensitive.
+	 */
+	bool startsWith(const String start_string, 
+					String::CaseSensitivity cs=String::CaseSensitive);
+
+	/**
+	 * Returns true if this string starts with start_char; otherwise returns false.
+	 *
+	 * @param start_char - the const char* used to see if this string starts 
+	 * with the same characters.
+	 * @param cs - the case sensitivity to be used, defaults to String::CaseSensitive.
+	 */
+	bool startsWith(const char* start_char, 
+					String::CaseSensitivity cs=String::CaseSensitive);
+
+	/**
+	 * Return the part of the string between the indices from and to.
+	 *
+	 * @param from - the index position for starting the substring.
+	 * @param to - the index position for ending the substring.
+	 */
+	String substr(int from, int to);
+	
+	/**
+	 * Return the part of the string between the indices from and to.
+	 *
+	 * @param from - the index position for starting the substring.
+	 * @param to - the index position for ending the substring.
+	 */
+	String subString(int from, int to);
+	
+	/**
+	 * Converts this string to a double.
+	 */	
+	double toDouble();
+
+	/**
+	 * Converts this string to a float.
+	 */	
+	float toFloat();
+	
+	/**
+	 * Converts this string to an int.
+	 */	
+	int toInt();
+	
+	/**
+	 * Converts this string to all lowercase text.
+	 */	
+	void toLowerCase();
+	
+	/**
+	 * Returns a std::string object with the data contained in this String.
+	 */	
+	std::string toStdString();
+	
+	/**
+	 * Converts this string to all uppercase text.
+	 */	
+	void toUpperCase();
+	
+	
+#ifdef __APPLE__
+	#pragma mark File I/O Methods
+#endif
+	
+	// File methods
+	
+	
+	/**
+	 * Returns whether or not a file exists at this string path.
+	 */	
+	bool isFile();
+	
+	/**
+	 * Returns whether or not a directory exists at this string path.
+	 *
+	 * Method will only work in its current form if you have write 
+	 * permissions to the directory.
+	 */	
+	bool isDirectory();
+	
+	/**
+	 * Converts the path to a unix path by replacing the back slash 
+	 * characters with forward slashes
+	 */
+	void convertToUnixPath();
+
+	/**
+	 * Converts the path to a windows path by replacing the forward slash 
+	 * characters with backward slashes
+	 */
+	void convertToWindowsPath();
+	
+	/**
+	 * Returns the file extension of this string.
+	 */	
+	String getExtension();
+
+	/**
+	 * Returns the file name of this string including the file extension.
+	 */	
+	String getFileName();
+
+	/**
+	 * Returns the file name of this string without the file extension.
+	 */	
+	String getFileNameWithoutExtension();
+	
+	/**
+	 * Returns the file path of this string without the file name or extension.
+	 */	
+	String getFilePath();
+	
+private:
+
+	/**
+	 * Converts an integer to an String.
+	 */	
+	String _itoa(int input);
+
+	/**
+	 * Converts an integer to an String.
+	 */	
+	String _ftoa(float input);
+
+	/**
+	 * Converts an integer to an String.
+	 */	
+	String _dtoa(double input);
+
+	/**
+	 * Converts an integer to an String.
+	 */	
+	String _btoa(bool input);
+};
+
+}
+
+#endif

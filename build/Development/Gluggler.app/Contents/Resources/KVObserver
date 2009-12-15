@@ -1,0 +1,258 @@
+/*
+ *  KVObserver.h
+ *  KVObserver
+ *
+ *  Created by Brandon Newendorp on 9/15/09.
+ *  Copyright 2009 Amoniq LLC. All rights reserved.
+ *
+ *  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements.  See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *  
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *  
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
+
+#ifndef _AQ_KVOBSERVER_H_
+#define _AQ_KVOBSERVER_H_
+
+
+/**
+ * A primarily virtual class that other classes should inherit from, in order to implement KVO.
+ * KVO is a system where classes can register to receive global notifications at any given time
+ * from other parts of the application. These notifications are keyed and contain a value. 
+ * Observers register to receive notificaitons when a certain key is announced, then they handle
+ * the value for that key appropriately. Note that multiple observers can receive the same notification.
+ */
+namespace aq {
+
+class KVObserver
+{
+public:
+
+	/**
+	 * Default constructor, does nothing.
+	 */
+	KVObserver() {;}
+
+	
+	/**
+	 * Default destructor that removes the class as an observer.
+	 *
+	 * The destructor must be overridden and you need to include the following in it:
+	 * KVReflector::instance()->removeObserver(this);
+	 */
+	virtual ~KVObserver() {;}
+
+
+	/**
+	 * willChangeValueForKey and didChangeValueForKey are messages that is posted before a keyed 
+	 * value is about to change. There are not many instances where this message needs to be 
+	 * handled, but it can be when needed.
+	 * 
+	 * This method also NEEDS to be reimplemented by any class that inherits from KVObserver. If 
+	 * it isn't reimplemented, your app WILL crash when it receives this notification. It can & should be 
+	 * overridden for different types beyond the basic C++ types the template supports.
+	 *
+	 * @param value - osg::Vec3 value for the given key.
+	 * @param key - the key which the observers are listening for.
+	 */
+	virtual void willChangeValueForKey(osg::Vec3 value, aq::String key)
+	{
+		std::cerr << "Developer needs to implement (osg::Vec3) willChangeValueForKey" << std::endl;
+		assert(false);
+	}
+	virtual void didChangeValueForKey(osg::Vec3 value, aq::String key)
+	{
+		std::cerr << "Developer needs to implement (osg::Vec3) didChangeValueForKey" << std::endl;
+		assert(false);
+	}
+	
+	
+	/**
+	 * willChangeValueForKey and didChangeValueForKey are messages that is posted before a keyed 
+	 * value is about to change. There are not many instances where this message needs to be 
+	 * handled, but it can be when needed.
+	 * 
+	 * This method also NEEDS to be reimplemented by any class that inherits from KVObserver. If 
+	 * it isn't reimplemented, your app WILL crash when it receives this notification. It can & should be 
+	 * overridden for different types beyond the basic C++ types the template supports.
+	 *
+	 * @param value - osg::Vec4 value for the given key.
+	 * @param key - the key which the observers are listening for.
+	 */
+	virtual void willChangeValueForKey(osg::Vec4 value, aq::String key)
+	{
+		std::cerr << "Developer needs to implement (osg::Vec4) willChangeValueForKey" << std::endl;
+		assert(false);
+	}
+	virtual void didChangeValueForKey(osg::Vec4 value, aq::String key)
+	{
+		std::cerr << "Developer needs to implement (osg::Vec4) didChangeValueForKey" << std::endl;
+		assert(false);
+	}
+	
+	
+	/**
+	 * willChangeValueForKey and didChangeValueForKey are messages that is posted before a keyed 
+	 * value is about to change. There are not many instances where this message needs to be 
+	 * handled, but it can be when needed.
+	 * 
+	 * This method also NEEDS to be reimplemented by any class that inherits from KVObserver. If 
+	 * it isn't reimplemented, your app WILL crash when it receives this notification. It can & should be 
+	 * overridden for different types beyond the basic C++ types the template supports.
+	 *
+	 * @param value - osg::StateSet* value for the given key.
+	 * @param key - the key which the observers are listening for.
+	 */
+	virtual void willChangeValueForKey(osg::StateSet* value, aq::String key)
+	{
+		std::cerr << "Developer needs to implement (osg::StateSet*) willChangeValueForKey" << std::endl;
+		assert(false);
+	}
+	virtual void didChangeValueForKey(osg::StateSet* value, aq::String key)
+	{
+		std::cerr << "Developer needs to implement (osg::StateSet*) didChangeValueForKey" << std::endl;
+		assert(false);
+	}
+	
+	
+	/**
+	 * willChangeValueForKey and didChangeValueForKey are messages that is posted before a keyed 
+	 * value is about to change. There are not many instances where this message needs to be 
+	 * handled, but it can be when needed.
+	 * 
+	 * This method also NEEDS to be reimplemented by any class that inherits from KVObserver. If 
+	 * it isn't reimplemented, your app WILL crash when it receives this notification. It can & should be 
+	 * overridden for different types beyond the basic C++ types the template supports.
+	 *
+	 * @param value - int value for the given key.
+	 * @param key - the key which the observers are listening for.
+	 */
+	virtual void willChangeValueForKey(int value, aq::String key)
+	{
+		std::cerr << "Developer needs to implement (int) willChangeValueForKey" << std::endl;
+		assert(false);
+	}
+	virtual void didChangeValueForKey(int value, aq::String key)
+	{
+		std::cerr << "Developer needs to implement (int) didChangeValueForKey" << std::endl;
+		assert(false);
+	}
+	
+	
+	/**
+	 * willChangeValueForKey and didChangeValueForKey are messages that is posted before a keyed 
+	 * value is about to change. There are not many instances where this message needs to be 
+	 * handled, but it can be when needed.
+	 * 
+	 * This method also NEEDS to be reimplemented by any class that inherits from KVObserver. If 
+	 * it isn't reimplemented, your app WILL crash when it receives this notification. It can & should be 
+	 * overridden for different types beyond the basic C++ types the template supports.
+	 *
+	 * @param value - float value for the given key.
+	 * @param key - the key which the observers are listening for.
+	 */
+	virtual void willChangeValueForKey(float value, aq::String key)
+	{
+		std::cerr << "Developer needs to implement (float) willChangeValueForKey" << std::endl;
+		assert(false);
+	}
+	virtual void didChangeValueForKey(float value, aq::String key)
+	{
+		std::cerr << "Developer needs to implement (float) didChangeValueForKey" << std::endl;
+		assert(false);
+	}
+	
+	
+	/**
+	 * willChangeValueForKey and didChangeValueForKey are messages that is posted before a keyed 
+	 * value is about to change. There are not many instances where this message needs to be 
+	 * handled, but it can be when needed.
+	 * 
+	 * This method also NEEDS to be reimplemented by any class that inherits from KVObserver. If 
+	 * it isn't reimplemented, your app WILL crash when it receives this notification. It can & should be 
+	 * overridden for different types beyond the basic C++ types the template supports.
+	 *
+	 * @param value - double value for the given key.
+	 * @param key - the key which the observers are listening for.
+	 */
+	virtual void willChangeValueForKey(double value, aq::String key)
+	{
+		std::cerr << "Developer needs to implement (double) willChangeValueForKey" << std::endl;
+		assert(false);
+	}
+	virtual void didChangeValueForKey(double value, aq::String key)
+	{
+		std::cerr << "Developer needs to implement (double) didChangeValueForKey" << std::endl;
+		assert(false);
+	}
+
+
+	/**
+	 * willChangeValueForKey and didChangeValueForKey are messages that is posted before a keyed 
+	 * value is about to change. There are not many instances where this message needs to be 
+	 * handled, but it can be when needed.
+	 * 
+	 * This method also NEEDS to be reimplemented by any class that inherits from KVObserver. If 
+	 * it isn't reimplemented, your app WILL crash when it receives this notification. It can & should be 
+	 * overridden for different types beyond the basic C++ types the template supports.
+	 *
+	 * @param value - bool value for the given key.
+	 * @param key - the key which the observers are listening for.
+	 */
+	virtual void willChangeValueForKey(bool value, aq::String key)
+	{
+		std::cerr << "Developer needs to implement (bool) willChangeValueForKey" << std::endl;
+		assert(false);
+	}
+	virtual void didChangeValueForKey(bool value, aq::String key)
+	{
+		std::cerr << "Developer needs to implement (bool) didChangeValueForKey" << std::endl;
+		assert(false);
+	}
+	
+	
+	/**
+	 * willChangeValueForKey and didChangeValueForKey are messages that is posted before a keyed 
+	 * value is about to change. There are not many instances where this message needs to be 
+	 * handled, but it can be when needed.
+	 * 
+	 * This method also NEEDS to be reimplemented by any class that inherits from KVObserver. If 
+	 * it isn't reimplemented, your app WILL crash when it receives this notification. It can & should be 
+	 * overridden for different types beyond the basic C++ types the template supports.
+	 *
+	 * @param value - aq::String value for the given key.
+	 * @param key - the key which the observers are listening for.
+	 */
+	virtual void willChangeValueForKey(aq::String value, aq::String key)
+	{
+		std::cerr << "Developer needs to implement (aq::String) willChangeValueForKey" << std::endl;
+		assert(false);
+	}
+	virtual void didChangeValueForKey(aq::String value, aq::String key)
+	{
+		std::cerr << "Developer needs to implement (aq::String) didChangeValueForKey" << std::endl;
+		assert(false);
+	}
+};
+
+}
+
+#endif // _AQKVOBSERVER_H_
+
+
+
+
+
+

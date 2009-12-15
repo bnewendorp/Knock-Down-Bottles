@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?org-vrjuggler-jccl-settings configuration.version="3.0"?>
+<configuration xmlns="http://www.vrjuggler.org/jccl/xsd/3.0/configuration" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Linux Joydev Configuration" xsi:schemaLocation="http://www.vrjuggler.org/jccl/xsd/3.0/configuration http://www.vrjuggler.org/jccl/xsd/3.0/configuration.xsd">
+   <elements>
+      <input_manager name="IM Linux Joydev" version="2">
+         <driver>LinuxJoydev_drv</driver>
+      </input_manager>
+      <linux_joydev name="Logitech Dual Action" version="1">
+         <port_name>/dev/input/js0</port_name>
+         <min>-32767.0</min>
+         <max>32767.0</max>
+<!--         <device_host>Node(master)</device_host> -->
+      </linux_joydev>
+      
+      <digital_proxy name="LogitechDualActionDigitalProxy0" version="1">
+         <device>Logitech Dual Action</device>
+         <unit>0</unit>
+      </digital_proxy>
+      <digital_proxy name="LogitechDualActionDigitalProxy1" version="1">
+         <device>Logitech Dual Action</device>
+         <unit>1</unit>
+      </digital_proxy>
+      <digital_proxy name="LogitechDualActionDigitalProxy2" version="1">
+         <device>Logitech Dual Action</device>
+         <unit>2</unit>
+      </digital_proxy>
+      <digital_proxy name="LogitechDualActionDigitalProxy3" version="1">
+         <device>Logitech Dual Action</device>
+         <unit>3</unit>
+      </digital_proxy>
+      <digital_proxy name="LogitechDualActionDigitalProxy4" version="1">
+         <device>Logitech Dual Action</device>
+         <unit>4</unit>
+      </digital_proxy>
+      <digital_proxy name="LogitechDualActionDigitalProxy5" version="1">
+         <device>Logitech Dual Action</device>
+         <unit>5</unit>
+      </digital_proxy>
+      <digital_proxy name="LogitechDualActionDigitalProxy6" version="1">
+         <device>Logitech Dual Action</device>
+         <unit>6</unit>
+      </digital_proxy>
+      <digital_proxy name="LogitechDualActionDigitalProxy7" version="1">
+         <device>Logitech Dual Action</device>
+         <unit>7</unit>
+      </digital_proxy>
+      <digital_proxy name="LogitechDualActionDigitalProxy8" version="1">
+         <device>Logitech Dual Action</device>
+         <unit>8</unit>
+      </digital_proxy>
+      <digital_proxy name="LogitechDualActionDigitalProxy9" version="1">
+         <device>Logitech Dual Action</device>
+         <unit>9</unit>
+      </digital_proxy>
+      <digital_proxy name="LogitechDualActionDigitalProxy10" version="1">
+         <device>Logitech Dual Action</device>
+         <unit>10</unit>
+      </digital_proxy>
+      <digital_proxy name="LogitechDualActionDigitalProxy11" version="1">
+         <device>Logitech Dual Action</device>
+         <unit>11</unit>
+      </digital_proxy>
+      
+      <analog_proxy name="LogitechDualActionAnalogProxy0" version="1">
+         <device>Logitech Dual Action</device>
+         <unit>0</unit>
+      </analog_proxy>
+      <analog_proxy name="LogitechDualActionAnalogProxy1" version="1">
+         <device>Logitech Dual Action</device>
+         <unit>1</unit>
+      </analog_proxy>
+      <analog_proxy name="LogitechDualActionAnalogProxy2" version="1">
+         <device>Logitech Dual Action</device>
+         <unit>2</unit>
+      </analog_proxy>
+      <analog_proxy name="LogitechDualActionAnalogProxy3" version="1">
+         <device>Logitech Dual Action</device>
+         <unit>3</unit>
+      </analog_proxy>
+      <analog_proxy name="LogitechDualActionAnalogProxy4" version="1">
+         <device>Logitech Dual Action</device>
+         <unit>4</unit>
+      </analog_proxy>
+      <analog_proxy name="LogitechDualActionAnalogProxy5" version="1">
+         <device>Logitech Dual Action</device>
+         <unit>5</unit>
+      </analog_proxy>
+      
+      <alias name="Button 1" version="1">
+         <proxy>LogitechDualActionDigitalProxy0</proxy>
+      </alias>
+      <alias name="Button 2" version="1">
+         <proxy>LogitechDualActionDigitalProxy1</proxy>
+      </alias>
+      <alias name="Button 3" version="1">
+         <proxy>LogitechDualActionDigitalProxy2</proxy>
+      </alias>
+      <alias name="Button 4" version="1">
+         <proxy>LogitechDualActionDigitalProxy3</proxy>
+      </alias>
+      
+      <alias name="Button 5" version="1">
+         <proxy>LogitechDualActionDigitalProxy4</proxy>
+      </alias>
+      <alias name="Button 6" version="1">
+         <proxy>LogitechDualActionDigitalProxy5</proxy>
+      </alias>
+      <alias name="Button 7" version="1">
+         <proxy>LogitechDualActionDigitalProxy6</proxy>
+      </alias>
+      <alias name="Button 8" version="1">
+         <proxy>LogitechDualActionDigitalProxy7</proxy>
+      </alias>
+      
+      <alias name="Button 9" version="1">
+         <proxy>LogitechDualActionDigitalProxy8</proxy>
+      </alias>
+      <alias name="Button 10" version="1">
+         <proxy>LogitechDualActionDigitalProxy9</proxy>
+      </alias>
+      
+      <alias name="Button LJ" version="1">
+         <proxy>LogitechDualActionDigitalProxy10</proxy>
+      </alias>
+      <alias name="Button RJ" version="1">
+         <proxy>LogitechDualActionDigitalProxy11</proxy>
+      </alias>
+      
+      <alias name="Left Joystick Horizontal Axis" version="1">
+         <proxy>LogitechDualActionAnalogProxy0</proxy>
+      </alias>
+      <alias name="Left Joystick Vertical Axis" version="1">
+         <proxy>LogitechDualActionAnalogProxy1</proxy>
+      </alias>
+      <alias name="Right Joystick Horizontal Axis" version="1">
+         <proxy>LogitechDualActionAnalogProxy2</proxy>
+      </alias>
+      <alias name="Right Joystick Vertical Axis" version="1">
+         <proxy>LogitechDualActionAnalogProxy3</proxy>
+      </alias>
+      
+      <alias name="DirectionPad Horizontal Axis" version="1">
+         <proxy>LogitechDualActionAnalogProxy4</proxy>
+      </alias>
+      <alias name="DirectionPad Vertical Axis" version="1">
+         <proxy>LogitechDualActionAnalogProxy5</proxy>
+      </alias>
+   </elements>
+</configuration>
