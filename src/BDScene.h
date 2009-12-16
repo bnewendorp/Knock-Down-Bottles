@@ -60,6 +60,7 @@ public:
 	void moveDown();
 	
 	void dropBall();
+	void setupBoxes();
 	
 private:
 	osg::MatrixTransform* createOSGBox( osg::Vec3 size );

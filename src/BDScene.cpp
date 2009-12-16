@@ -61,6 +61,7 @@ void BDScene::init()
 	_models->addChild(_wandTrans.get());
 	
 	initPhysics();
+	setupBoxes();
 	
 	// Initialize the lights group for KVO notifications
 	_lightsGroup = new LightsGroup(_models->getOrCreateStateSet());
@@ -103,9 +104,41 @@ void BDScene::initPhysics()
 	_models->addChild(createOSGBox(osg::Vec3(10000,.1,10000)));
 }
 
+void BDScene::setupBoxes()
+{
+	for (int i=0; i < 15; i++)
+	{
+		for (int j=0; j < 15; j++)
+		{
+			// put each box in its place
+			float boxSize = 0.5;
+			osg::ref_ptr<osg::MatrixTransform> node = createOSGBox(osg::Vec3(boxSize, boxSize, boxSize));
+			osgbBullet::MotionState *motion = new osgbBullet::MotionState;
+			motion->setTransform(node.get());
+			static btCollisionShape *cShape;
+			if (cShape == NULL)
+				cShape = osgbBullet::btBoxCollisionShapeFromOSG(node.get());
+			
+			btTransform shapeTransform;
+			shapeTransform.setIdentity();
+			shapeTransform.setOrigin(btVector3(i, j+0.5, -5)); // change this to move the initial position of the object
+			motion->setWorldTransform(shapeTransform);
+			
+			btScalar mass(10.0);
+			btVector3 inertia;
+			cShape->calculateLocalInertia(mass, inertia);
+			btRigidBody::btRigidBodyConstructionInfo rbinfo(mass, motion, cShape, inertia);
+			btRigidBody *body = new btRigidBody(rbinfo);
+			_dynamicsWorld->addRigidBody(body);
+			
+			_models->addChild(node.get());
+		}
+	}
+}
+
 void BDScene::dropBall()
 {
-	osg::ref_ptr<osg::Node> nodeDB = osgDB::readNodeFile("somefile.ive");
+	osg::ref_ptr<osg::Node> nodeDB = osgDB::readNodeFile("/Users/brandon/Programming/OpenSceneGraph-Data-2.8.0/glider.osg");
 	osg::ref_ptr<osg::MatrixTransform> node = new osg::MatrixTransform();
 	
 	if (nodeDB != NULL)
@@ -129,13 +162,13 @@ void BDScene::dropBall()
 	shapeTransform.setOrigin(btVector3(0, 0, 0)); // change this to move the initial position of the object
 	motion->setWorldTransform(shapeTransform);
 	
-	btScalar mass(1.0);
+	btScalar mass(2.0);
 	btVector3 inertia;
 	cShape->calculateLocalInertia(mass, inertia);
 	btRigidBody::btRigidBodyConstructionInfo rbinfo(mass, motion, cShape, inertia);
 	btRigidBody *body = new btRigidBody(rbinfo);
-	body->setLinearVelocity( btVector3( -5, -1, 0 ) );
-	body->setAngularVelocity( btVector3( 1, 0, 0 ) );
+	body->setLinearVelocity( btVector3( 1, -7, -10 ) );
+	body->setAngularVelocity( btVector3( 1, 0.5, 0 ) );
 	_dynamicsWorld->addRigidBody(body);
 	
 	_models->addChild(node.get());
