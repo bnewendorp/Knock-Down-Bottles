@@ -103,8 +103,6 @@ void BDScene::initPhysics()
 	btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
 	_dynamicsWorld->addRigidBody(groundRigidBody);
 	
-//	sphereShape = new btSphereShape(1);
-	
 	_models->addChild(createOSGBox(osg::Vec3(10000,.1,10000)));
 }
 
