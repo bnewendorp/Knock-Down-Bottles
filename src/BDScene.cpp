@@ -106,32 +106,34 @@ void BDScene::initPhysics()
 
 void BDScene::setupBoxes()
 {
+	// make the box and collision shape once - that way bullet has less unique collision shapes
+	// this is suggested in the bullet wiki
+	float boxSize = 0.5;
+	osg::ref_ptr<osg::MatrixTransform> node = createOSGBox(osg::Vec3(boxSize, boxSize, boxSize));
+	btCollisionShape *cShape = osgbBullet::btBoxCollisionShapeFromOSG(node.get());	
+	btScalar mass(10.0);
+	btVector3 inertia;
+	cShape->calculateLocalInertia(mass, inertia);
+	
 	for (int i=0; i < 15; i++)
 	{
 		for (int j=0; j < 15; j++)
 		{
 			// put each box in its place
-			float boxSize = 0.5;
-			osg::ref_ptr<osg::MatrixTransform> node = createOSGBox(osg::Vec3(boxSize, boxSize, boxSize));
+			osg::ref_ptr<osg::MatrixTransform> boxClone = createOSGBox(osg::Vec3(boxSize, boxSize, boxSize));
 			osgbBullet::MotionState *motion = new osgbBullet::MotionState;
-			motion->setTransform(node.get());
-			static btCollisionShape *cShape;
-			if (cShape == NULL)
-				cShape = osgbBullet::btBoxCollisionShapeFromOSG(node.get());
+			motion->setTransform(boxClone.get());
 			
 			btTransform shapeTransform;
 			shapeTransform.setIdentity();
 			shapeTransform.setOrigin(btVector3(i, j+0.5, -5)); // change this to move the initial position of the object
 			motion->setWorldTransform(shapeTransform);
 			
-			btScalar mass(10.0);
-			btVector3 inertia;
-			cShape->calculateLocalInertia(mass, inertia);
 			btRigidBody::btRigidBodyConstructionInfo rbinfo(mass, motion, cShape, inertia);
 			btRigidBody *body = new btRigidBody(rbinfo);
 			_dynamicsWorld->addRigidBody(body);
 			
-			_models->addChild(node.get());
+			_models->addChild(boxClone.get());
 		}
 	}
 }
