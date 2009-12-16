@@ -60,9 +60,6 @@ void BDScene::init()
 	_navTrans->addChild(_models.get());
 	_models->addChild(_wandTrans.get());
 	
-	//=========================================================================
-	// RIGHT HERE IS WHERE YOU SHOULD START PUMPING MODELS INTO THE SCENEGRAPH
-	//=========================================================================
 	initPhysics();
 	
 	// Initialize the lights group for KVO notifications
@@ -108,7 +105,7 @@ void BDScene::initPhysics()
 
 void BDScene::dropBall()
 {
-	osg::ref_ptr<osg::Node> nodeDB = osgDB::readNodeFile("/Users/brandon/Programming/OpenSceneGraph-Data-2.8.0/glider.osg");
+	osg::ref_ptr<osg::Node> nodeDB = osgDB::readNodeFile("somefile.ive");
 	osg::ref_ptr<osg::MatrixTransform> node = new osg::MatrixTransform();
 	
 	if (nodeDB != NULL)
@@ -127,17 +124,9 @@ void BDScene::dropBall()
 	osg::Node* debugNode = osgbBullet::osgNodeFromBtCollisionShape( cShape );
     node->addChild( debugNode );
 	
-	// Set debug node state.
-    osg::StateSet* state = debugNode->getOrCreateStateSet();
-    osg::PolygonMode* pm = new osg::PolygonMode( osg::PolygonMode::FRONT_AND_BACK, osg::PolygonMode::LINE );
-    state->setAttributeAndModes( pm );
-    osg::PolygonOffset* po = new osg::PolygonOffset( -1, -1 );
-    state->setAttributeAndModes( po );
-    state->setMode( GL_LIGHTING, osg::StateAttribute::OFF );	
-	
 	btTransform shapeTransform;
 	shapeTransform.setIdentity();
-	shapeTransform.setOrigin(btVector3(10, 0, -10)); // change this to move the initial position of the object
+	shapeTransform.setOrigin(btVector3(0, 0, 0)); // change this to move the initial position of the object
 	motion->setWorldTransform(shapeTransform);
 	
 	btScalar mass(1.0);
