@@ -20,7 +20,7 @@ BDScene::BDScene()
 	_isMaster = false;
 	_totalTime = 0.0;
 	_aimingVector = osg::Vec3(1, -7, -10);
-	_mass = 2.0;
+	_mass = 3.0;
 	
 	// Register listening keys with KVReflector
 	aq::KVReflector::instance()->addObserverWithKey(this, "Update_Wand_Matrix");
@@ -231,18 +231,18 @@ void BDScene::didChangeValueForKey(double value, aq::String key)
 	}
 	else if (key == "Mass_1")
 	{
-		_mass = 1.0;
-		std::cout << "Object mass set to 1.0" << std::endl;
+		_mass = 3.0;
+		std::cout << "Object mass set to 3.0" << std::endl;
 	}
 	else if (key == "Mass_2")
 	{
-		_mass = 5.0;
-		std::cout << "Object mass set to 5.0" << std::endl;
+		_mass = 20.0;
+		std::cout << "Object mass set to 20.0" << std::endl;
 	}
 	else if (key == "Mass_3")
 	{
-		_mass = 20.0;
-		std::cout << "Object mass set to 20.0" << std::endl;
+		_mass = 70.0;
+		std::cout << "Object mass set to 70.0" << std::endl;
 	}
 	else if (key == "Reset_Scene")
 	{
