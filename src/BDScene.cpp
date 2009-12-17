@@ -19,7 +19,8 @@ BDScene::BDScene()
 	// Initialize the audio manager and audio flags
 	_isMaster = false;
 	_totalTime = 0.0;
-	_aimingVector = osg::Vec3(0, 0, -15);
+	_aimingVector = osg::Vec3(1, -7, -10);
+	_mass = 2.0;
 	
 	// Register listening keys with KVReflector
 	aq::KVReflector::instance()->addObserverWithKey(this, "Update_Wand_Matrix");
@@ -173,8 +174,8 @@ void BDScene::dropBall()
 	static btCollisionShape *cShape;
 	if (cShape == NULL)
 		cShape = osgbBullet::btConvexTriMeshCollisionShapeFromOSG(node.get());
-	osg::Node* debugNode = osgbBullet::osgNodeFromBtCollisionShape( cShape );
-    node->addChild( debugNode );
+//	osg::Node* debugNode = osgbBullet::osgNodeFromBtCollisionShape( cShape );
+//    node->addChild( debugNode );
 	
 	btTransform shapeTransform;
 	shapeTransform.setIdentity();
@@ -186,7 +187,7 @@ void BDScene::dropBall()
 	btRigidBody::btRigidBodyConstructionInfo rbinfo(_mass, motion, cShape, inertia);
 	btRigidBody *body = new btRigidBody(rbinfo);
 	body->setLinearVelocity( btVector3( _aimingVector.x(), _aimingVector.y(), _aimingVector.z() ) );
-	body->setAngularVelocity( btVector3( 0, 0, 0 ) );
+	body->setAngularVelocity( btVector3( 1, 0, 0 ) );
 	_dynamicsWorld->addRigidBody(body);
 	
 	_launchedObjects->addChild(node.get());
