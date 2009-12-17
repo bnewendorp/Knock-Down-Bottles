@@ -115,9 +115,9 @@ void BDScene::setupBoxes()
 	btVector3 inertia;
 	cShape->calculateLocalInertia(mass, inertia);
 	
-	for (int i=0; i < 15; i++)
+	for (int i=-10; i < 10; i++)
 	{
-		for (int j=0; j < 15; j++)
+		for (int j=0; j < 12; j++)
 		{
 			// put each box in its place
 			osg::ref_ptr<osg::MatrixTransform> boxClone = createOSGBox(osg::Vec3(boxSize, boxSize, boxSize));
