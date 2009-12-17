@@ -19,12 +19,17 @@ BDScene::BDScene()
 	// Initialize the audio manager and audio flags
 	_isMaster = false;
 	_totalTime = 0.0;
+	_aimingVector = osg::Vec3(0, 0, -15);
 	
 	// Register listening keys with KVReflector
 	aq::KVReflector::instance()->addObserverWithKey(this, "Update_Wand_Matrix");
 	aq::KVReflector::instance()->addObserverWithKey(this, "Decrease_Nav_Speed");
 	aq::KVReflector::instance()->addObserverWithKey(this, "Increase_Nav_Speed");
 	aq::KVReflector::instance()->addObserverWithKey(this, "Drop ball");
+	aq::KVReflector::instance()->addObserverWithKey(this, "Aim_Left");
+	aq::KVReflector::instance()->addObserverWithKey(this, "Aim_Right");
+	aq::KVReflector::instance()->addObserverWithKey(this, "Aim_Up");
+	aq::KVReflector::instance()->addObserverWithKey(this, "Aim_Down");
 }
 
 void BDScene::setMaster(bool isMaster)
@@ -171,6 +176,8 @@ void BDScene::dropBall()
 	btRigidBody *body = new btRigidBody(rbinfo);
 	body->setLinearVelocity( btVector3( 1, -7, -10 ) );
 	body->setAngularVelocity( btVector3( 1, 0.5, 0 ) );
+	body->setLinearVelocity( btVector3( _aimingVector.x(), _aimingVector.y(), _aimingVector.z() ) );
+	body->setAngularVelocity( btVector3( 0, 0, 0 ) );
 	_dynamicsWorld->addRigidBody(body);
 	
 	_models->addChild(node.get());
@@ -195,6 +202,34 @@ void BDScene::didChangeValueForKey(double value, aq::String key)
 	else if (key == "Drop ball")
 	{
 		dropBall();
+	}
+	else if (key == "Aim_Left")
+	{
+		_aimingVector[0] -= 2;
+	}
+	else if (key == "Aim_Right")
+	{
+		_aimingVector[0] += 2;
+	}
+	else if (key == "Aim_Up")
+	{
+		_aimingVector[1] += 2;
+	}
+	else if (key == "Aim_Down")
+	{
+		_aimingVector[1] -= 2;
+	}
+	else if (key == "Mass_1")
+	{
+		_mass = 1.0;
+	}
+	else if (key == "Mass_2")
+	{
+		_mass = 5.0;
+	}
+	else if (key == "Mass_3")
+	{
+		_mass = 20.0;
 	}
 }
 

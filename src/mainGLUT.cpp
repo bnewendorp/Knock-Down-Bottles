@@ -354,6 +354,11 @@ void keySpecial(int key, int x, int y)
 {
 	switch(key)
 	{
+		case GLUT_KEY_LEFT: aq::KVReflector::instance()->didUpdateValueForKey((double)1.0, "Aim_Left");	break;
+		case GLUT_KEY_RIGHT: aq::KVReflector::instance()->didUpdateValueForKey((double)1.0, "Aim_Right");	break;
+		case GLUT_KEY_DOWN: aq::KVReflector::instance()->didUpdateValueForKey((double)1.0, "Aim_Down");	break;
+		case GLUT_KEY_UP: aq::KVReflector::instance()->didUpdateValueForKey((double)1.0, "Aim_Up");	break;
+			
 		default: break;
 
 	}
