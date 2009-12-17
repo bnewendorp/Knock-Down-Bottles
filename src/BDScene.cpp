@@ -222,14 +222,17 @@ void BDScene::didChangeValueForKey(double value, aq::String key)
 	else if (key == "Mass_1")
 	{
 		_mass = 1.0;
+		std::cout << "Object mass set to 1.0" << std::endl;
 	}
 	else if (key == "Mass_2")
 	{
 		_mass = 5.0;
+		std::cout << "Object mass set to 5.0" << std::endl;
 	}
 	else if (key == "Mass_3")
 	{
 		_mass = 20.0;
+		std::cout << "Object mass set to 20.0" << std::endl;
 	}
 }
 
