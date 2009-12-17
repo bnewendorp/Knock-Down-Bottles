@@ -305,7 +305,7 @@ void keyboard(unsigned char key, int x, int y)
 		case '1': aq::KVReflector::instance()->didUpdateValueForKey((double)1.0, "Mass_1");	break;
 		case '2': aq::KVReflector::instance()->didUpdateValueForKey((double)1.0, "Mass_2");	break;
 		case '3': aq::KVReflector::instance()->didUpdateValueForKey((double)1.0, "Mass_3");	break;
-			
+		case 'R': aq::KVReflector::instance()->didUpdateValueForKey((double)1.0, "Reset_Scene");	break;
 		case 'b': aq::KVReflector::instance()->didUpdateValueForKey((double)1.0, "Drop ball");	break;
 			
 		case 'q': gCamera.setStrafeLeft(true);	break;

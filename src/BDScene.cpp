@@ -33,6 +33,7 @@ BDScene::BDScene()
 	aq::KVReflector::instance()->addObserverWithKey(this, "Mass_1");
 	aq::KVReflector::instance()->addObserverWithKey(this, "Mass_2");
 	aq::KVReflector::instance()->addObserverWithKey(this, "Mass_3");
+	aq::KVReflector::instance()->addObserverWithKey(this, "Reset_Scene");
 }
 
 void BDScene::setMaster(bool isMaster)
@@ -60,8 +61,15 @@ void BDScene::init()
 	_models = new osg::Group();
 	_wandTrans = new osg::MatrixTransform();
 	
+	_boxes = new osg::Group();
+	_launchedObjects = new osg::Group();
+	
+	_models->addChild(_launchedObjects.get());
+	_models->addChild(_boxes.get());
+	
 	// Set the models node to normal scaling
 	_models->getOrCreateStateSet()->setMode(GL_NORMALIZE, osg::StateAttribute::ON);
+	_launchedObjects->getOrCreateStateSet()->setMode(GL_NORMALIZE, osg::StateAttribute::ON);
 	
 	// Setup the scenegraph hierarchy
 	_rootNode->addChild(_navTrans.get());
@@ -141,13 +149,14 @@ void BDScene::setupBoxes()
 			btRigidBody *body = new btRigidBody(rbinfo);
 			_dynamicsWorld->addRigidBody(body);
 			
-			_models->addChild(boxClone.get());
+			_boxes->addChild(boxClone.get());
 		}
 	}
 }
 
 void BDScene::dropBall()
 {
+	std::cout << "Launching ball with axis " << _aimingVector.x() << ", " << _aimingVector.y() << ", " << _aimingVector.z() << std::endl;
 	osg::ref_ptr<osg::Node> nodeDB = osgDB::readNodeFile("/Users/brandon/Programming/OpenSceneGraph-Data-2.8.0/glider.osg");
 	osg::ref_ptr<osg::MatrixTransform> node = new osg::MatrixTransform();
 	
@@ -180,7 +189,7 @@ void BDScene::dropBall()
 	body->setAngularVelocity( btVector3( 0, 0, 0 ) );
 	_dynamicsWorld->addRigidBody(body);
 	
-	_models->addChild(node.get());
+	_launchedObjects->addChild(node.get());
 }
 
 void BDScene::didChangeValueForKey(double value, aq::String key)
@@ -234,6 +243,25 @@ void BDScene::didChangeValueForKey(double value, aq::String key)
 		_mass = 20.0;
 		std::cout << "Object mass set to 20.0" << std::endl;
 	}
+	else if (key == "Reset_Scene")
+	{
+		std::cout << "Resetting scene" << std::endl;
+		_resetScene();
+	}
+}
+
+void BDScene::_resetScene()
+{
+	// Remove OSG objects
+	_launchedObjects->removeChildren(0, _launchedObjects->getNumChildren());
+	_boxes->removeChildren(0, _boxes->getNumChildren());
+	
+	// Remove Bullet objects by creating a new dynamics world
+	delete _dynamicsWorld;
+	initPhysics();
+	
+	// Add fresh stuff to the scene
+	setupBoxes();
 }
 
 void BDScene::setHeadMatrix(osg::Matrixf mat)

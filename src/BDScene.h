@@ -63,6 +63,8 @@ public:
 	void setupBoxes();
 	
 private:
+	
+	void _resetScene();
 	osg::MatrixTransform* createOSGBox( osg::Vec3 size );
 	
 	osg::Vec3 _aimingVector;
@@ -73,6 +75,8 @@ private:
 	osg::ref_ptr<osg::Group> _rootNode;
 	osg::ref_ptr<osg::MatrixTransform> _navTrans;
 	osg::ref_ptr<osg::Group> _models;
+	osg::ref_ptr<osg::Group> _boxes;
+	osg::ref_ptr<osg::Group> _launchedObjects;
 	osg::ref_ptr<osg::MatrixTransform> _wandTrans;
 	osg::Matrixf _wandMatrix;
 	osg::Matrixf _headMatrix;
