@@ -301,7 +301,12 @@ void keyboard(unsigned char key, int x, int y)
 {
 	switch(key)
 	{
-		//handle key input
+		//handle key input	
+		case '1': aq::KVReflector::instance()->didUpdateValueForKey((double)1.0, "Mass_1");	break;
+		case '2': aq::KVReflector::instance()->didUpdateValueForKey((double)1.0, "Mass_2");	break;
+		case '3': aq::KVReflector::instance()->didUpdateValueForKey((double)1.0, "Mass_3");	break;
+			
+			
 		case 'q': gCamera.setStrafeLeft(true);	break;
 		case 'w': gCamera.setUp(true);	break;
 		case 'e': gCamera.setStrafeRight(true);	break;

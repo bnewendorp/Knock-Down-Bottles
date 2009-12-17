@@ -66,6 +66,8 @@ private:
 	osg::MatrixTransform* createOSGBox( osg::Vec3 size );
 	
 	osg::Vec3 _aimingVector;
+	btScalar _mass;
+	
 	// Private variables
 	DeviceInputController* _deviceInputController;
 	osg::ref_ptr<osg::Group> _rootNode;

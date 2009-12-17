@@ -30,6 +30,9 @@ BDScene::BDScene()
 	aq::KVReflector::instance()->addObserverWithKey(this, "Aim_Right");
 	aq::KVReflector::instance()->addObserverWithKey(this, "Aim_Up");
 	aq::KVReflector::instance()->addObserverWithKey(this, "Aim_Down");
+	aq::KVReflector::instance()->addObserverWithKey(this, "Mass_1");
+	aq::KVReflector::instance()->addObserverWithKey(this, "Mass_2");
+	aq::KVReflector::instance()->addObserverWithKey(this, "Mass_3");
 }
 
 void BDScene::setMaster(bool isMaster)
@@ -116,7 +119,7 @@ void BDScene::setupBoxes()
 	float boxSize = 0.5;
 	osg::ref_ptr<osg::MatrixTransform> node = createOSGBox(osg::Vec3(boxSize, boxSize, boxSize));
 	btCollisionShape *cShape = osgbBullet::btBoxCollisionShapeFromOSG(node.get());	
-	btScalar mass(10.0);
+	btScalar mass(30.0);
 	btVector3 inertia;
 	cShape->calculateLocalInertia(mass, inertia);
 	
@@ -169,13 +172,10 @@ void BDScene::dropBall()
 	shapeTransform.setOrigin(btVector3(0, 0, 0)); // change this to move the initial position of the object
 	motion->setWorldTransform(shapeTransform);
 	
-	btScalar mass(2.0);
 	btVector3 inertia;
-	cShape->calculateLocalInertia(mass, inertia);
-	btRigidBody::btRigidBodyConstructionInfo rbinfo(mass, motion, cShape, inertia);
+	cShape->calculateLocalInertia(_mass, inertia);
+	btRigidBody::btRigidBodyConstructionInfo rbinfo(_mass, motion, cShape, inertia);
 	btRigidBody *body = new btRigidBody(rbinfo);
-	body->setLinearVelocity( btVector3( 1, -7, -10 ) );
-	body->setAngularVelocity( btVector3( 1, 0.5, 0 ) );
 	body->setLinearVelocity( btVector3( _aimingVector.x(), _aimingVector.y(), _aimingVector.z() ) );
 	body->setAngularVelocity( btVector3( 0, 0, 0 ) );
 	_dynamicsWorld->addRigidBody(body);
