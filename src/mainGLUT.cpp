@@ -398,7 +398,7 @@ void keyUpBoard(unsigned char key, int x, int y)
 		case 's': gCamera.setDown(false);	break;
 		case 'd': gCamera.setRight(false);	break;
 		
-		case 'b': aq::KVReflector::instance()->didUpdateValueForKey((double)1.0, "Drop ball");
+		case 'b': aq::KVReflector::instance()->didUpdateValueForKey((double)1.0, "Drop ball");	break;
 		
 		case ' ':	BDScene::instance().buttonInput(0, false);	break;		//space bar controls the main wand button
 	}
